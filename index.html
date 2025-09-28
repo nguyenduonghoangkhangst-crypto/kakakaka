@@ -227,21 +227,24 @@
         // Load fonts using Web Font Loader
         const loadFonts = async () => {
             try {
+                // Cú pháp chuẩn, gõ lại thủ công để loại bỏ ký tự ẩn
                 const fontFace1 = new FontFace(
                     'BigShouldersText', 
                     "url(./font/BigShouldersText-Medium.ttf) format('truetype')"
-                    );
+                );
                 const fontFace2 = new FontFace(
                     'RobotoCondensed', 
                     "url(./font/RobotoCondensed-Regular.ttf) format('truetype')"
-                    );
+                );
                 const fontFace3 = new FontFace(
                     'Roboto', 
-                    "url(./font/Roboto-Regular.ttf)  format('truetype')"
-                    );
+                    "url(./font/Roboto-Regular.ttf) format('truetype')"
+                );
                 const fontFace4 = new FontFace(
-                    'RobotoMedium', "url(./font/Roboto-Medium.ttf) format('truetype')"
-                    );
+                    'RobotoMedium', 
+                    "url(./font/Roboto-Medium.ttf) format('truetype')"
+                );
+                
                 await Promise.all([
                     fontFace1.load(),
                     fontFace2.load(),
@@ -252,14 +255,18 @@
                 });
                 console.log ('✅ Fonts loaded thành công');
             } catch (e) {
-                console.error('Lỗi tải font:', e);
-                alert('Không thể tải font. Vui lòng kiểm tra file font trong thư mục assets.');
+                console.error('❌ Lỗi tải font:', e);
+                // Vẫn giữ cảnh báo để người dùng kiểm tra file font
+                alert('Không thể tải font. Vui lòng kiểm tra file font trong thư mục font/.'); 
             }
         };
-            loadFonts();
-        // Initialize PWA
+
+        // Initialize PWA (Đặt window.onload ở đây, không gọi loadFonts() bên ngoài nữa)
         window.onload = async () => {
-            await loadFonts();
+            // ✅ Chỉ gọi loadFonts() một lần duy nhất tại đây khi trang đã tải xong
+            await loadFonts(); 
+            
+            // Khối code Service Worker (nên đặt vào đây để chạy sau khi font tải)
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('service-worker.js')
                     .then(reg => console.log('Service Worker registered'))
@@ -297,7 +304,6 @@
                 });
             }
         };
-
         const imageInput = document.getElementById('imageInput');
         const previewList = document.getElementById('previewList');
         const canvas = document.getElementById('canvas');
@@ -745,6 +751,7 @@
 </body>
 
 </html>
+
 
 
 
