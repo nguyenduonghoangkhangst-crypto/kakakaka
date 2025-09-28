@@ -227,10 +227,21 @@
         // Load fonts using Web Font Loader
         const loadFonts = async () => {
             try {
-                const fontFace1 = new FontFace('BigShouldersText', 'url(./font/BigShouldersText-Medium.ttf)') format("truetype")
-                const fontFace2 = new FontFace('RobotoCondensed', 'url(./font/RobotoCondensed-Regular.ttf)') format("truetype")
-                const fontFace3 = new FontFace('Roboto', 'url(./font/Roboto-Regular.ttf)')  format("truetype")
-                const fontFace4 = new FontFace('RobotoMedium', 'url(./font/Roboto-Medium.ttf)')  format("truetype")
+                const fontFace1 = new FontFace(
+                    'BigShouldersText', 
+                    "url(./font/BigShouldersText-Medium.ttf) format('truetype')"
+                    );
+                const fontFace2 = new FontFace(
+                    'RobotoCondensed', 
+                    "url(./font/RobotoCondensed-Regular.ttf) format('truetype')"
+                    );
+                const fontFace3 = new FontFace(
+                    'Roboto', 
+                    "url(./font/Roboto-Regular.ttf)  format('truetype')"
+                    );
+                const fontFace4 = new FontFace(
+                    'RobotoMedium', "url(./font/Roboto-Medium.ttf) format('truetype')"
+                    );
                 await Promise.all([
                     fontFace1.load(),
                     fontFace2.load(),
@@ -239,12 +250,13 @@
                 ]).then(fonts => {
                     fonts.forEach(font => document.fonts.add(font));
                 });
+                console.log ('✅ Fonts loaded thành công');
             } catch (e) {
                 console.error('Lỗi tải font:', e);
                 alert('Không thể tải font. Vui lòng kiểm tra file font trong thư mục assets.');
             }
         };
-
+            loadfont();
         // Initialize PWA
         window.onload = async () => {
             await loadFonts();
@@ -733,5 +745,6 @@
 </body>
 
 </html>
+
 
 
